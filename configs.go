@@ -1828,6 +1828,24 @@ func (config PreCheckoutConfig) params() (Params, error) {
 	return params, nil
 }
 
+type RefundTransactionConfig struct {
+	TelegramPaymentChargeID string // required
+	UserID                  int64  // required
+}
+
+func (config RefundTransactionConfig) method() string {
+	return "refundStarPayment"
+}
+
+func (config RefundTransactionConfig) params() (Params, error) {
+	params := make(Params)
+
+	params["telegram_payment_charge_id"] = config.TelegramPaymentChargeID
+	params.AddNonZero64("user_id", config.UserID)
+
+	return params, nil
+}
+
 // DeleteMessageConfig contains information of a message in a chat to delete.
 type DeleteMessageConfig struct {
 	ChannelUsername string
